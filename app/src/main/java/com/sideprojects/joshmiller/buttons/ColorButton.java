@@ -17,7 +17,7 @@ public class ColorButton extends Button {
     final int dGreen = Color.rgb(4, 86, 50);
     private int color = 0;
     int number = 0;
-    private ArrayList<Integer> toggleList = new ArrayList<Integer>();
+    private ArrayList<ColorButton> toggleList = new ArrayList<ColorButton>();
 
     public ColorButton(Context context, int color) {
         super(context);
@@ -54,5 +54,12 @@ public class ColorButton extends Button {
         else if(color == lBlue){
             setColor(dBlue);
         }
+        for(int i = 0; i < toggleList.size(); i++){
+            toggleList.get(i).toggleColor();
+        }
+    }
+
+    public ArrayList<ColorButton> getToggleList(){
+        return  toggleList;
     }
 }

@@ -79,6 +79,9 @@ public class MainActivity extends Activity {
         for(int i = 0; i < buttons.length; i++){
             buttons[i].setColor(colors[i]);
             buttons[i].setNumber(i);
+            if(level[i][0] != -1){
+                buttons[i].getToggleList().add(buttons[level[i][0]]);
+            }
         }
         mainLayout.addView(master);
     }
