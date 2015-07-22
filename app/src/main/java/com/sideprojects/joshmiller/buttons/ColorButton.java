@@ -11,13 +11,8 @@ import java.util.ArrayList;
  * Created by josh on 7/16/15.
  */
 public class ColorButton extends Button {
-    final int lBlue = Color.rgb(120,205,229);
-    final int dBlue = Color.rgb(29, 100, 169);
-    final int lGreen = Color.rgb(95, 191, 110);
-    final int dGreen = Color.rgb(4, 86, 50);
     private int color = 0;
     int number = 0;
-    private ArrayList<ColorButton> toggleList = new ArrayList<ColorButton>();
 
     public ColorButton(Context context, int color) {
         super(context);
@@ -42,24 +37,7 @@ public class ColorButton extends Button {
     }
 
     public void toggleColor(){
-        if(color==lGreen){
-            setColor(dGreen);
-        }
-        else if(color == dGreen){
-            setColor(lGreen);
-        }
-        else if(color == dBlue){
-            setColor(lBlue);
-        }
-        else if(color == lBlue){
-            setColor(dBlue);
-        }
-        for(int i = 0; i < toggleList.size(); i++){
-            toggleList.get(i).toggleColor();
-        }
+        setColor(ButtonColors.getToggleColor(color));
     }
 
-    public ArrayList<ColorButton> getToggleList(){
-        return  toggleList;
-    }
 }
