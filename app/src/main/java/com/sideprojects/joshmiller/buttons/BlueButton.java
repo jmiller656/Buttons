@@ -14,7 +14,7 @@ public class BlueButton extends ColorButton{
     public void toggleColor(){
         super.toggleColor();
         if(togglePartner!= null){
-            togglePartner.toggleColor();
+            togglePartner.partnerToggle();
         }
     }
     public void setPartner(ColorButton c){

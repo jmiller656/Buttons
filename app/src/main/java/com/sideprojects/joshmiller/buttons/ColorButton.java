@@ -40,4 +40,8 @@ public class ColorButton extends Button {
         setColor(ButtonColors.getToggleColor(color));
     }
 
+    public void partnerToggle(){
+        setColor(ButtonColors.getToggleColor(color));
+    }
+
 }

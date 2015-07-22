@@ -1,9 +1,13 @@
 package com.sideprojects.joshmiller.buttons;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -18,6 +22,7 @@ public class Map {
     private int[][] level;
     private int size;
     private Context context;
+    private Handler handler;
     public Map(int size){
         this.size = size;
         solution = new int[size][size];
@@ -28,6 +33,9 @@ public class Map {
         if(i < solution.length && j<solution.length){
             solution[i][j] = k;
         }
+    }
+    public void setHandler(Handler handler){
+        this.handler = handler;
     }
     public void setSolution(int[][] solution){
         this.solution = solution;
@@ -43,10 +51,17 @@ public class Map {
                 }
             }
         }
-        System.out.println("@@@@@@@@@@@@ YOU'RE WINNER!!!!!! @@@@@@@@@@@@");
+        Message msg = Message.obtain();
+        msg.what = 106;
+        if(handler!= null)
+            handler.sendMessage(msg);
+        else{
+            System.out.println("Null handler");
+        }
         return true;
     }
     public void makeLayout(RelativeLayout main, Context context){
+        main.removeAllViews();
         this.context = context;
         LinearLayout master = new LinearLayout(context);
         master.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
@@ -64,7 +79,14 @@ public class Map {
                 LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT);
                 lp2.weight=1;
                 l2.setLayoutParams(lp2);
-                buttons[i][j] = new ColorButton(context, Color.BLACK);
+                if(ButtonColors.isGreen(solution[i][j]))
+                    buttons[i][j] = new GreenButton(context);
+                else if(ButtonColors.isBlue(solution[i][j]))
+                    buttons[i][j] = new BlueButton(context);
+                else if(ButtonColors.isOrange(solution[i][j]))
+                    buttons[i][j] = new OrangeButton(context);
+                else if(ButtonColors.isPurple(solution[i][j]))
+                    buttons[i][j] = new PurpleButton(context);
                 ColorButton b = buttons[i][j];
                 b.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT, ViewGroup.LayoutParams.FILL_PARENT));
                 b.setText("Hello!");
@@ -79,19 +101,12 @@ public class Map {
                 });
                 l2.addView(b);
                 l.addView(l2);
-                //buttons[i][j] = b;
             }
             master.addView(l);
         }
         int k = 0;
         for(int i = 0; i < buttons.length; i++){
             for(int j = 0; j <buttons.length; j ++){
-                int color = solution[i][j];
-                if(ButtonColors.isLight(color)){
-                    color = ButtonColors.getToggleColor(color);
-                }
-                System.out.println(i + " " + j);
-                buttons[i][j].setColor(color);
                 buttons[i][j].setNumber(k);
                 k++;
             }
